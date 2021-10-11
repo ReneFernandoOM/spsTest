@@ -6,6 +6,7 @@ from config import Config
 from app.resources.api_user import ApiUserRegister, ApiUser, ApiUserLogin, ApiUserLogout
 from app.resources.client_user import ClientUser, ClientUserList
 from app.resources.pet import Pet, PetList
+from app.resources.pet_image import PetImage
 
 
 def create_app():
@@ -25,6 +26,7 @@ def create_app():
     api.add_resource(ClientUserList, "/clients")
     api.add_resource(Pet, "/pet")
     api.add_resource(PetList, "/pets")
+    api.add_resource(PetImage, "/pet_image/<int:pet_id>")
     api.init_app(app)
 
     configure_jwt(app)

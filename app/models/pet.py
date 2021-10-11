@@ -13,6 +13,7 @@ class PetModel(db.Model):
     weight = db.Column(db.Float(precision=2), nullable=False)
     height = db.Column(db.Integer, nullable=False)
     tipo_animal = db.Column(db.String(50), nullable=False)
+    image_s3_key = db.Column(db.String(75))
 
     owner_id = db.Column(db.Integer, db.ForeignKey("client_user.id"), nullable=False)
     owner = db.relationship("ClientUserModel", backref="pets", lazy="joined")
@@ -31,6 +32,7 @@ class PetSchema(ma.SQLAlchemyAutoSchema):
         model = PetModel
         load_only = ("owner_id",)
         dump_only = ("id",)
+        exclude = ("image_s3_key",)
         include_fk = True
         load_instance = True
 
