@@ -1,4 +1,5 @@
 from marshmallow.decorators import post_load
+from sqlalchemy.orm import backref
 from app.extensions import db, ma
 from marshmallow import fields
 
@@ -16,7 +17,9 @@ class PetModel(db.Model):
     image_s3_key = db.Column(db.String(75))
 
     owner_id = db.Column(db.Integer, db.ForeignKey("client_user.id"), nullable=False)
-    owner = db.relationship("ClientUserModel", backref="pets", lazy="joined")
+    owner = db.relationship(
+        "ClientUserModel", lazy="joined", backref=backref("pets", cascade="all,delete")
+    )
 
     @classmethod
     def find_by_id(cls, _id):
